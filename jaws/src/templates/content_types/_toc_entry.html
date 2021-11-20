@@ -1,0 +1,4 @@
+<div class="table-of-contents-entry">
+<a href="#{{entry.anchor}}">{{entry.value}}</a>
+{% for entry in entry.children %}{% include "content_types/_toc_entry.html" %}{% endfor %}
+</div>

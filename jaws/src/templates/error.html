@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>{{code}} - {{title}}</title>
+    <link id="page-icon" rel="shortcut icon" href="/static/icons/favicon.ico" />
+  </head>
+  <body>
+    <h1>{{code}} - {{title}}</h1>
+    {% if description is not none %}
+    {% if description is string %}
+      {{description}}
+    {% else %}
+    {% for entry in description %}
+      <p>{{entry}}</p>
+    {% endfor %}
+    {% endif %}
+    {% endif %}
+  </body>
+</html>

@@ -1,0 +1,1 @@
+<a href="{{entry.url}}" class="{{'' if entry.exists else 'non-existant'}} {{'external' if entry.external else ''}}">{% with values=entry.value %}{% include "content_types/_values.html" %}{% endwith %}</a>

@@ -1,0 +1,23 @@
+# Compile
+FROM python:3.9.0rc1-slim-buster AS compile-image
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y libpq-dev gcc g++ make && apt-get clean
+
+COPY jaws/pyreq.txt .
+RUN pip install --user -r pyreq.txt
+
+# Runtime
+FROM python:3.9.0rc1-slim-buster AS runtime-image
+COPY --from=compile-image /root/.local /root/.local
+RUN apt-get update && apt-get install -y libpq-dev
+
+ENV PATH="/root/.local/bin:$PATH"
+
+#COPY jaws/pyreq.txt .
+#RUN pip install --user -r pyreq.txt
+
+COPY jaws/src/ src/
+COPY .env .
+
+WORKDIR src/
+CMD ["python", "-u", "app.py"]

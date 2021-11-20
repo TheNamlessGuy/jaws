@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block include %}
+<script src="/static/read.js"></script>
+{% endblock %}
+
+{% block content %}
+<div id="page-title">{{title}}</div>
+{% for entry in content %}
+{% include ["content_types/" + entry.type + ".html", "content_types/_missing.html"] %}
+{% endfor %}
+{% endblock %}

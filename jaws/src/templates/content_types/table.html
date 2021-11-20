@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      {% for cell in entry.header %}
+      <td class="table-cell">{% with values=cell %}{% include "content_types/_values.html" %}{% endwith %}</td>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+  {% for row in entry.rows %}
+    <tr>
+      {% for cell in row %}
+      <td class="table-cell">{% with values=cell %}{% include "content_types/_values.html" %}{% endwith %}</td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

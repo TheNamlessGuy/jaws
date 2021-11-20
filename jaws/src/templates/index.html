@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <link id="page-icon" rel="shortcut icon" href="/static/icons/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="/static/index.css" />
+    <script src="/static/index.js"></script>
+    {% block include %}{% endblock %}
+  </head>
+  <body>
+    <div id="sidebar">
+      <div class="sidebar-box">
+        <span>Search:</span>
+        <input>
+      </div>
+    </div>
+    <div id="page-content">
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>
