@@ -29,9 +29,11 @@ body {
   background-color: var(--fg);
   padding: 5px;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
 }
 .sidebar-box input {
-  width: 95%;
+  flex-grow: 1;
 }
 .sidebar-box + .sidebar-box {
   margin-top: 5px;

@@ -9,6 +9,7 @@ import routes.root
 import routes.read
 import routes.create
 import routes.update
+import routes.search
 
 import api.get
 import api.create

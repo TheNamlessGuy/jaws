@@ -11,8 +11,7 @@ def render_error_page(httpcode, title, description = None):
   )
 
 def page_not_found():
-  return render_error_page(404, '404 Not Found')
-#  return '404 Not Found', 404
+  return render_error_page(404, 'Not Found')
 
 @flask_app.errorhandler(404)
 def errorhandler_404(e):
@@ -28,4 +27,3 @@ def exception(e):
   lines = ['--> ' + item for sublist in lines for item in sublist]
   print('EXCEPTION:\n' + '\n'.join(lines))
   return render_error_page(500, 'Internal Error', lines)
-#  return '', 500

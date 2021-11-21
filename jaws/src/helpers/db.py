@@ -60,9 +60,7 @@ def _get_page_data(conn, cur, args):
   if data is None:
     return None
 
-  cur.execute('SELECT * FROM jaws.metadata WHERE page_id = %s', (data['id'],))
-  data['metadata'] = cur.fetchall()
-  return data
+  return fill_with_metadata(cur, [data])[0]
 
 def get_page_data(uid):
   return use_connection(
@@ -132,6 +130,47 @@ def _create_tables(conn, cur, args):
 
 def create_tables():
   return use_connection(_create_tables)
+
+##########
+# Search #
+##########
+def _search(conn, cur, args):
+  where = ''
+  params = []
+  for q in args['query']:
+    if where != '':
+      where += ' AND'
+
+    if q.startswith('-'):
+      where += ' title NOT ILIKE %s AND content NOT ILIKE %s'
+      q = q[1:]
+    else:
+      where += ' (title ILIKE %s OR content ILIKE %s)'
+    q = '%' + q + '%'
+    params.extend([q, q])
+
+  if where == '':
+    return []
+
+  cur.execute('SELECT * FROM jaws.pages WHERE' + where, params)
+  return fill_with_metadata(cur, cur.fetchall())
+
+def search(query):
+  return use_connection(
+    _search,
+    args = {'query': query},
+    cursor_factory = psycopg2.extras.RealDictCursor,
+  )
+
+###########
+# Helpers #
+###########
+def fill_with_metadata(cur, entries):
+  for entry in entries:
+    cur.execute('SELECT * FROM jaws.metadata WHERE page_id = %s', (entry['id'],))
+    entry['metadata'] = cur.fetchall()
+
+  return entries
 
 # DEBUG: Remove
 def _remove_tables(conn, cur, args):

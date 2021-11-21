@@ -1,0 +1,32 @@
+.error-text {
+  color: #F00;
+}
+
+#search-page-search-container {
+  display: flex;
+  margin-bottom: 15px;
+}
+#search-page-search-input {
+  flex-grow: 1;
+  height: 30px;
+}
+#search-page-search-button {
+  margin-left: 5px;
+}
+
+#search-result-explanation {
+  border-bottom: 1px dashed #000;
+  padding-bottom: 5px;
+}
+
+.search-result {
+  margin: 16px 0;
+}
+
+.search-result-title {
+  font-size: 200%;
+}
+
+.search-result-content {
+  font-style: italic;
+}

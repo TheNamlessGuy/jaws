@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+
+{% block title %}
+Search: '{{query}}'
+{% endblock %}
+
+{% block include %}
+<link rel="stylesheet" type="text/css" href="/static/search.css" />
+<script src="/static/search.js"></script>
+{% endblock %}
+
+{% block content %}
+<div id="page-title">Search</div>
+<div id="search-page-search-container">
+  <input id="search-page-search-input" value="{{query}}">
+  <button id="search-page-search-button">Search</button>
+</div>
+{% if error %}
+<i class="error-text">{{error}}</i>
+{% elif results|length == 0 %}
+<i>No results found for query '{{query}}'</i>
+{% else %}
+<div id="search-result-explanation"><b>{{results|length}}</b> results</div>
+{% for entry in results %}
+<div class="search-result">
+  <a class="search-result-title" href="/read/{{entry.uid}}">{{entry.title|safe}}</a>
+  <div class="search-result-content">{{entry.content|safe}}</div>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -56,4 +56,22 @@ const Helpers = {
   redirect: function(to) {
     window.location.href = (new URL(window.location.href).origin) + to;
   },
+
+  search: function(query = null) {
+    if (query == null) {
+      query = document.getElementById('search-sidebar-box-input').value;
+    }
+
+    this.redirect('/search/?q=' + query);
+  },
 };
+
+window.addEventListener('load', () => {
+  const searchInput = document.getElementById('search-sidebar-box-input');
+  searchInput.addEventListener('keyup', (e) => {
+    if (e.keyCode === 13) { // Enter
+      Helpers.search(searchInput.value);
+    }
+    e.stopPropagation();
+  });
+});

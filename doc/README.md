@@ -103,8 +103,8 @@ The table-cell brackets can be replaced with the tc brackets:
 ```
 
 ## Table of Contents
-Just put the toc bracket where you want it on the page.
-**Note:** You can only have one TOC per page.
+Just put the toc bracket where you want it on the page.  
+**Note:** You can only have one TOC per page.  
 Example:
 ```
 [[TOC/]]
