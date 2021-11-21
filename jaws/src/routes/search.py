@@ -31,7 +31,7 @@ def routes_search():
   for q in query:
     if q.startswith('-'):
       continue
-    pattern = re.compile(q, re.IGNORECASE)
+    pattern = re.compile(re.escape(q), re.IGNORECASE)
 
     for i in range(len(results)):
       # Title

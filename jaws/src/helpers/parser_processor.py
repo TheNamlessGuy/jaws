@@ -119,7 +119,6 @@ def string(tokens, i):
   offset += 1
 
   value = _get(tokens, i + offset)
-  print('string value', value)
   if value is None:
     return None
   elif value['type'] == 'str_symbol':
