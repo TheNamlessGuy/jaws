@@ -35,10 +35,10 @@ def tokenize(str):
       parsing.pop()
       i += 1
     elif is_parsing(parsing, 'type') and c == ' ':
-      [retval, tmp] = reset_tmp(retval, tmp.strip(), 'type')
+      [retval, tmp] = reset_tmp(retval, tmp.strip().lower(), 'type')
       parsing.append('type_parameter_name')
     elif is_parsing(parsing, 'type_parameter_name') and c == '=':
-      [retval, tmp] = reset_tmp(retval, tmp.strip(), 'parameter_name')
+      [retval, tmp] = reset_tmp(retval, tmp.strip().lower(), 'parameter_name')
       retval.append({'type': 'eq'})
       parsing[-1] = 'type_parameter_value'
     elif is_parsing(parsing, 'type_parameter_value') and c == '"':
