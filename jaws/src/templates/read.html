@@ -10,7 +10,5 @@
 
 {% block content %}
 <div id="page-title">{{title}}</div>
-{% for entry in content %}
-{% include ["content_types/" + entry.type + ".html", "content_types/_missing.html"] %}
-{% endfor %}
+{% with values=content %}{% include "content_types/_values.html" %}{% endwith %}
 {% endblock %}
