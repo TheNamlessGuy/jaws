@@ -1,4 +1,5 @@
 import logging
+import waitress
 
 from flask_app import flask_app
 
@@ -24,4 +25,4 @@ flask_app.logger.disabled = True
 
 if __name__ == '__main__':
   db.create_tables()
-  flask_app.run(host='0.0.0.0', port=8000)
+  waitress.serve(flask_app, host='0.0.0.0', port=8000) # https://stackoverflow.com/a/64980625

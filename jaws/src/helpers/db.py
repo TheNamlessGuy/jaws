@@ -128,6 +128,11 @@ def _create_tables(conn, cur, args):
 
   conn.commit()
 
+  if get_page_data(uid = '') is None:
+    with open('../example-front-page.txt', 'r') as f:
+      content = f.read()
+    create_page_data(uid = '', title = 'Example front page', content = content)
+
 def create_tables():
   return use_connection(_create_tables)
 

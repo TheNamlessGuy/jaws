@@ -13,11 +13,9 @@ RUN apt-get update && apt-get install -y libpq-dev
 
 ENV PATH="/root/.local/bin:$PATH"
 
-#COPY jaws/pyreq.txt .
-#RUN pip install --user -r pyreq.txt
-
 COPY jaws/src/ src/
 COPY .env .
+COPY jaws/example-front-page.txt .
 
 WORKDIR src/
 CMD ["python", "-u", "app.py"]
