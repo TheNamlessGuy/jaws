@@ -8,6 +8,7 @@ const Helpers = {
    *   responseType: string,
    *   onProgress: function,
    *   onFinish: function(xhr),
+   *   onSuccess: function(xhr),
    * }
    */
   sendPostRequest: function(url, parameters, opts = null) {
@@ -31,7 +32,11 @@ const Helpers = {
       if (opts?.onFinish != null) {
         opts.onFinish(xhr);
       } else if (xhr.status === 200) {
-        window.location.reload(false);
+        if (opts?.onSuccess != null) {
+          opts.onSuccess(xhr);
+        } else {
+          window.location.reload(false);
+        }
       } else {
         console.error('TODO: ERROR', xhr);
       }

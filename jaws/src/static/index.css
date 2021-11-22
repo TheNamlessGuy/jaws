@@ -21,8 +21,7 @@ body {
 
 #sidebar {
   margin-right: 10px;
-  width: 7vw;
-  min-width: 135px;
+  width: 150px;
 }
 
 .sidebar-box {
@@ -54,12 +53,17 @@ body {
 a {
   text-decoration: none;
 }
+
 a.non-existant {
   color: #A82C2C;
 }
+
+a.external {
+  margin-right: 7px;
+}
 a.external:after {
   content: "🗹";
-  font-size: 50%;
+  font-size: 8px;
   position: absolute;
 }
 /* END: LINKS */

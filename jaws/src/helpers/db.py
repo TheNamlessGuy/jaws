@@ -40,11 +40,11 @@ def use_connection(
       conn.close()
 
 def get_title(uid, default = None):
-  data = get_page_data(uid)
+  data = get_page_data(uid, False)
   return data['title'] if data is not None else default
 
 def get_content(uid, default = None):
-  data = get_page_data(uid)
+  data = get_page_data(uid, False)
   return data['content'] if data is not None else default
 
 def get_metadata(uid, default = None):
@@ -60,12 +60,14 @@ def _get_page_data(conn, cur, args):
   if data is None:
     return None
 
-  return fill_with_metadata(cur, [data])[0]
+  if args['get_metadata']:
+    return fill_with_metadata(cur, [data])[0]
+  return data
 
-def get_page_data(uid):
+def get_page_data(uid, get_metadata = True):
   return use_connection(
     _get_page_data,
-    args = {'uid': uid},
+    args = {'uid': uid, 'get_metadata': get_metadata},
     cursor_factory = psycopg2.extras.RealDictCursor,
   )
 
@@ -103,6 +105,47 @@ def update_page_data(uid, title, content):
   return use_connection(
     _update_page_data,
     args = {'uid': uid, 'title': title, 'content': content},
+  )
+
+##################
+# Move page data #
+##################
+def _move_page_data(conn, cur, args):
+  cur.execute('SELECT id FROM jaws.pages WHERE uid = %s', (args['new'],))
+  if cur.fetchone() is not None:
+    return None
+
+  cur.execute('SELECT id FROM jaws.pages WHERE uid = %s', (args['old'],))
+  if cur.fetchone() is None:
+    return None
+
+  cur.execute('UPDATE jaws.pages SET uid = %s WHERE uid = %s RETURNING uid', (args['new'], args['old']));
+
+  conn.commit()
+  return True
+
+def move_page_data(old, new):
+  return use_connection(
+    _move_page_data,
+    args = {'old': old, 'new': new},
+  )
+
+####################
+# Delete page data #
+####################
+def _delete_page_data(conn, cur, args):
+  cur.execute('SELECT id FROM jaws.pages WHERE uid = %s', (args['uid'],))
+  if cur.fetchone() is None:
+    return None
+
+  cur.execute('DELETE FROM jaws.pages WHERE uid = %s', (args['uid'],));
+  conn.commit()
+  return True
+
+def delete_page_data(uid):
+  return use_connection(
+    _delete_page_data,
+    args = {'uid': uid},
   )
 
 #################

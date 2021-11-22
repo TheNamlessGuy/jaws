@@ -15,6 +15,8 @@ import routes.search
 import api.get
 import api.create
 import api.update
+import api.move
+import api.delete
 
 # TODO: Remove
 import api.debug

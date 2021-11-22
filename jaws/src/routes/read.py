@@ -17,5 +17,5 @@ def routes_read(uid):
   return render_template(
     'read.html',
     title = data['title'],
-    content = parser.parse(data['content']),
+    content = parser.parse(data['content'], uid),
   )

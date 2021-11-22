@@ -12,7 +12,7 @@ def routes_create(uid):
 
   return render_template(
     'edit.html',
-    verb = 'Create',
+    create = True,
     title = uid,
     content = '',
   )

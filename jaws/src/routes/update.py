@@ -12,7 +12,7 @@ def routes_update(uid):
 
   return render_template(
     'edit.html',
-    verb = 'Update',
+    create = False,
     title = data['title'],
     content = data['content'],
   )
