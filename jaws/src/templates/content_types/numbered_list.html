@@ -1,0 +1,5 @@
+<ol>
+  {% for entry in entry.value %}
+  <li>{% with values=entry.value %}{% include "content_types/_values.html" %}{% endwith %}</li>
+  {% endfor %}
+</ol>

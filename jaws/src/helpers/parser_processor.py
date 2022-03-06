@@ -70,6 +70,10 @@ def type(tokens, i, data):
   if node is not None:
     return node
 
+  node = type_numbered_list(tokens, i, data)
+  if node is not None:
+    return node
+
   node = type_table(tokens, i, data)
   if node is not None:
     return node
@@ -257,6 +261,61 @@ def type_link(tokens, i, data):
     node['value'].append({'type': 'text', 'value': empty_value})
 
   return {'consumed': offset, 'node': node}
+
+def type_numbered_list(tokens, i, data):
+  offset = 0
+  nodes = []
+
+  while True:
+    node = type_numbered_list_entry(tokens, i + offset, data)
+    if node is None:
+      break
+    offset += node['consumed']
+
+    if node['level'] == 1 or len(nodes) == 0:
+      nodes.append(node['node'])
+    else:
+      value = node['node']['value']
+      value = [{'type': 'numbered_list', 'value': [{'value': value}]}]
+
+      level = node['level'] - 1
+      tmp = nodes[-1]['value']
+      while level > 1:
+        level -= 1
+        tmp = tmp[-1]['value'][-1]['value']
+
+      tmp.extend(value)
+
+  if offset == 0:
+    return None
+
+  return {'consumed': offset, 'node': {'type': 'numbered_list', 'value': nodes}}
+
+def type_numbered_list_entry(tokens, i, data):
+  offset = 0
+
+  tmp = _type_quick(tokens, i + offset, data, ('numbered-entry', '#'))
+  if tmp is None:
+    return None
+  offset += tmp['consumed']
+
+  level = 1
+  while True:
+    tmp = _type_quick(tokens, i + offset, data, ('numbered-entry', '#'))
+    if tmp is None:
+      break
+    offset += tmp['consumed']
+    level += 1
+
+  values = _grab_to_newline(tokens, i + offset, data)
+  if values is None:
+    values = {'consumed': 0, 'node': []}
+  offset += values['consumed']
+  values = values['node']
+
+  offset += _skip_newline(tokens, i + offset, data)
+
+  return {'consumed': offset, 'node': {'value': values}, 'level': level}
 
 def type_bullets(tokens, i, data):
   offset = 0
