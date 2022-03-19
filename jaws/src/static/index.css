@@ -72,7 +72,8 @@ a.external:after {
 :root {
   --table-border: var(--bg);
   --table-header-bg: #F4A460;
-  --table-body-bg: #FFDEAD;
+  --table-body-bg-1: #FFDEAD;
+  --table-body-bg-2: #FFCD84;
 }
 
 table {
@@ -83,7 +84,7 @@ table {
   padding: 5px;
   border-left: 1px solid var(--table-border);
   border-bottom: 1px solid var(--table-border);
-  background-color: var(--table-body-bg);
+  background-color: var(--table-body-bg-1);
 }
 tr td.table-cell:last-child {
   border-right: 1px solid var(--table-border);
@@ -92,6 +93,10 @@ tr td.table-cell:last-child {
 thead .table-cell {
   background-color: var(--table-header-bg);
   border-top: 1px solid var(--table-border);
+}
+
+tbody > tr:nth-child(even) > td {
+  background-color: var(--table-body-bg-2);
 }
 /* END: TABLE */
 
