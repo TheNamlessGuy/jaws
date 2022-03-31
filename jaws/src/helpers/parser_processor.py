@@ -344,6 +344,9 @@ def type_bullets(tokens, i, data):
   if offset == 0:
     return None
 
+  # If the bullet is directly followed by a newline, skip it. <ul> has such a huge margin that it doesn't matter
+  offset += _skip_newline(tokens, i + offset, data)
+
   return {'consumed': offset, 'node': {'type': 'bullets', 'value': nodes}}
 
 def type_bullet(tokens, i, data):
